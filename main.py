@@ -2,6 +2,7 @@ from textSummarizer.pipeline.stage_01_data_ingestion import DataIngestionTrainin
 from textSummarizer.pipeline.stage_02_data_validation import DataValidationTrainingPipeline
 from textSummarizer.pipeline.stage_03_data_transformation import DataTransformationTrainingPipeline
 from textSummarizer.logging import logger
+from textSummarizer.pipeline.stage_04_data_trainer import ModelTrainerTrainingPipeline
 
 STAGE_NAME = "Data Ingestion stage"
 try:
@@ -28,6 +29,24 @@ try:
     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
     data_tranformation = DataTransformationTrainingPipeline()
     data_tranformation.main()
+    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+except Exception as e:
+    logger.exception(e)
+    raise e
+
+'''
+Run these 3 commands sequentially before running this stage in terminal
+
+pip install --upgrade accelerate
+pip uninstall -y transformers accelerate
+pip install transformers accelerate
+
+'''
+STAGE_NAME = "Model Training Stage"
+try:
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    model_training = ModelTrainerTrainingPipeline()
+    model_training.main()
     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
 except Exception as e:
     logger.exception(e)
